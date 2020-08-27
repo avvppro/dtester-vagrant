@@ -46,13 +46,15 @@ _EOF
     sudo grep 'temporary password' /var/log/mysqld.log | sed 's|.*: ||' >./1.txt
     tmp_pass=$(cat 1.txt)
     expect ./my.expect $tmp_pass
-    rm ./my.expect
+    rm ./my.expect ./1.txt
 }
 load_dump() {
     wget https://dtapi.if.ua/~yurkovskiy/dtapi_full.sql
+   	wget https://dtapi.if.ua/~yurkovskiy/IF-108/sessions.sql
     mysql -u root --password=RootPWD1@ dtapi2 < ./dtapi_full.sql
+    mysql -u root --password=RootPWD1@ dtapi2 < ./sessions.sql
     sudo chmod 666 /etc/my.cnf
-    sudo echo "bind-address=192.168.33.100" >>/etc/my.cnf
+    sudo echo "bind-address=192.168.33.11" >>/etc/my.cnf
     sudo chmod 644 /etc/my.cnf
     sudo systemctl restart mysqld
 }
