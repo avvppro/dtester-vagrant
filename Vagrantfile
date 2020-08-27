@@ -25,7 +25,7 @@ Vagrant.configure("2") do |config|
                     vb.memory = "2048"
                     vb.cpus = "1"
                  end
-                 subconfig.vm.provision :shell, path: "_vm.sh"
+                 subconfig.vm.provision :shell, path: "app_vm.sh"
              end
         end
         config.vm.define "be_balancer" do |subconfig|
